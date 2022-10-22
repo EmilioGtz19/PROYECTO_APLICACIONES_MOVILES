@@ -7,4 +7,23 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Color de fondo de las pantallas -->
+    <color name="bg_color1">#F5DEBE</color>
+    <color name="bg_color2">#FFF3E1</color>
+    <color name="bg_color3">#EEC994</color>
+
+    <!-- Color de boton Success -->
+    <color name="button_success">#71A680</color>
+
+    <!-- Color de boton secundario-->
+    <color name="button_secondary">#B3B3B3</color>
+
+    <!-- Color de links -->
+    <color name="link">#a01208</color>
+
+    <!-- Color de texto informativo-->
+    <color name="hints">#8D6E63</color>
+
+
 </resources>
