@@ -1,14 +1,18 @@
 package com.example.masterfood.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.masterfood.EditProfileActivity
 import com.example.masterfood.KitchenRecipesProvider
 import com.example.masterfood.R
+import com.example.masterfood.RegisterActivity
 import com.example.masterfood.adapter.KitchenRecipesAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +39,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view : View = inflater.inflate(R.layout.fragment_home, container, false)
+        val btn = view.findViewById<Button>(R.id.button)
+
+        btn.setOnClickListener{
+            val intent = Intent(requireActivity(), RegisterActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
+
         initRecyclerView(view)
         // Inflate the layout for this fragment
         return view

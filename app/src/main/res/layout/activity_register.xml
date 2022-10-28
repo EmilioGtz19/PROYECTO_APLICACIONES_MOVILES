@@ -8,14 +8,14 @@
     tools:context=".RegisterActivity">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/ivProfile"
         android:layout_width="196dp"
         android:layout_height="180dp"
         android:layout_marginTop="20dp"
         android:contentDescription="@string/imageview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSelect"
         app:srcCompat="@drawable/masterfoodimagotype" />
 
     <EditText
@@ -23,16 +23,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColorHint="@color/hints"
+        android:textColor="@color/hints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCamera" />
 
     <EditText
         android:id="@+id/txtLastname"
@@ -46,6 +47,7 @@
         android:minHeight="48dp"
         android:hint="@string/lastName"
         android:textColorHint="@color/hints"
+        android:textColor="@color/hints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName" />
@@ -62,6 +64,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColorHint="@color/hints"
+        android:textColor="@color/hints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
@@ -78,6 +81,7 @@
         android:minHeight="48dp"
         android:hint="@string/confirmPass"
         android:textColorHint="@color/hints"
+        android:textColor="@color/hints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
@@ -94,6 +98,7 @@
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textColorHint="@color/hints"
+        android:textColor="@color/hints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLastname" />
@@ -112,5 +117,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtConfirmPass" />
+
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/camera"
+        app:layout_constraintEnd_toStartOf="@+id/btnGallery"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+
+    <Button
+        android:id="@+id/btnGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnCamera"
+        app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+
+    <TextView
+        android:id="@+id/txtSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/SelectImage"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="@color/hints"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

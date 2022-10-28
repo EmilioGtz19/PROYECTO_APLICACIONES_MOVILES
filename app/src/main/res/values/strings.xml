@@ -35,4 +35,15 @@
     <string name="save">Guardar</string>
     <string name="goback">Regresar</string>
     <string name="editPass">Editar contraseña</string>
+    <string name="camera">CÁMARA</string>
+    <string name="gallery">GALERÍA</string>
+    <string name="SelectImage">Seleccionar foto de perfil</string>
+    <string name="required">Campo requerido</string>
+    <string name="checkEmail">El email ya se encuentra registrado</string>
+    <string name="passnotmatch">La contraseña no coincide</string>
+    <string name="rulesPass">Contraseña con un mínimo de 8 caracteres, una mayúscula, una minúscula y un número</string>
+    <string name="permissio_denied">Permiso denegado</string>
+    <string name="enable_permissions">Parece que has desactivado los permisos requeridos para activar la cámara. Se puede habilitar en la configuración de la aplicación.</string>
+    <string name="go_to_configuration">Ir a configuración</string>
+    <string name="cancel">Cancelar</string>
 </resources>
