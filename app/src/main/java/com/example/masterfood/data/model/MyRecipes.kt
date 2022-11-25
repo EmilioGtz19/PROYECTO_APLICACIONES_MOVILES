@@ -1,6 +1,6 @@
-package com.example.masterfood
+package com.example.masterfood.data.model
 
-class MyRecipes (
+data class MyRecipes (
     val photo: String,
     val title: String,
     val foodType: String,

@@ -18,7 +18,7 @@
     <string name="profile">Perfil</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="username">usuario</string>
-    <string name="welcome">Hola</string>
+    <string name="welcome">Bienvenido</string>
     <string name="search_elements">¿Qué quieres aprender hoy?</string>
     <string name="nameProfile">Nombre:</string>
     <string name="lastnameProfile">Apellidos:</string>
@@ -46,4 +46,21 @@
     <string name="enable_permissions">Parece que has desactivado los permisos requeridos para activar la cámara. Se puede habilitar en la configuración de la aplicación.</string>
     <string name="go_to_configuration">Ir a configuración</string>
     <string name="cancel">Cancelar</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="logout">CERRAR SESIÓN</string>
+    <string name="welcomeHome">Bienvenido</string>
+    <string name="add">Añadir</string>
+    <string name="create_recipe">Crear receta</string>
+    <string name="title">Título</string>
+    <string name="amount">Cantidad de personas</string>
+    <string name="nationality">Nacionalidad</string>
+    <string name="selectDifficulty">Seleccionar tipo de dificultad</string>
+    <string name="selectFoodType">Seleccionar tipo de comida</string>
+    <string name="publish">Publicar</string>
+    <string name="utensils">Utensilios</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="recipe_publish">Receta publicada</string>
+    <string name="EmptyIngredientsList">Faltan ingredientes</string>
+    <string name="EmptyUtensilsList">Faltan utensilios</string>
+    <string name="EmptyStepsList">Faltan los pasos de la receta</string>
 </resources>

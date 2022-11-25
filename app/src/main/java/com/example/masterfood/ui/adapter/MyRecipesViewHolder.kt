@@ -1,10 +1,10 @@
-package com.example.masterfood.adapter
+package com.example.masterfood.ui.adapter
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.masterfood.MyRecipes
+import com.example.masterfood.data.model.MyRecipes
 import com.example.masterfood.R
 
 class MyRecipesViewHolder(view: View): RecyclerView.ViewHolder(view) {

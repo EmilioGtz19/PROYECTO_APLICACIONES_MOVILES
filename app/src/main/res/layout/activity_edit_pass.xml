@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_color"
-    tools:context=".EditPassActivity">
+    tools:context=".ui.view.EditPassActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutHeader"
@@ -62,9 +62,10 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
-        android:hint="@string/password"
+        android:hint="@string/new_password"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textColor="@color/hints"
         android:textColorHint="@color/hints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,13 +82,14 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:hint="@string/confirmPass"
+        android:textColor="@color/hints"
         android:textColorHint="@color/hints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
     <Button
-        android:id="@+id/btnRegisterActivity"
+        android:id="@+id/btnUpdatePass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -114,6 +116,6 @@
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegisterActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/btnUpdatePass" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

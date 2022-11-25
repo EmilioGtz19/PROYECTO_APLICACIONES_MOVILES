@@ -1,9 +1,9 @@
-package com.example.masterfood.adapter
+package com.example.masterfood.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.masterfood.KitchenRecipes
+import com.example.masterfood.data.model.KitchenRecipes
 import com.example.masterfood.R
 
 class KitchenRecipesAdapter(private val kitchenRecipesList:List<KitchenRecipes>) : RecyclerView.Adapter<KitchenRecipesViewHolder>(){

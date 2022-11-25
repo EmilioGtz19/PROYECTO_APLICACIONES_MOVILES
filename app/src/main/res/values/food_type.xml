@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="food_type">
+        <item>Desayuno</item>
+        <item>Almuerzo</item>
+        <item>Cena</item>
+        <item>Merienda</item>
+    </string-array>
+
+</resources>

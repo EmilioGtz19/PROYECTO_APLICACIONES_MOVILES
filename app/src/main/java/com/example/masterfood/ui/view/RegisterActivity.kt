@@ -1,4 +1,4 @@
-package com.example.masterfood
+package com.example.masterfood.ui.view
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -12,10 +12,15 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.masterfood.data.DBHelper
-import com.example.masterfood.Utilities.ImageUtilities.getByteArrayFromBitmap
+import com.example.masterfood.R
+import com.example.masterfood.core.DBHelper
+import com.example.masterfood.core.ImageUtilities.getByteArrayFromBitmap
+import com.example.masterfood.data.model.ApiResponse
+import com.example.masterfood.data.model.UserModel
+import com.example.masterfood.ui.viewmodel.UserViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -25,10 +30,13 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.*
+
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var db: DBHelper
+    private lateinit var viewModel: UserViewModel
 
     private val responseLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
         if(activityResult.resultCode == RESULT_OK){
@@ -55,13 +63,14 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
         db = DBHelper(this)
 
+        initViewModel()
         btnRegisterActivity.setOnClickListener {
             val isValid = validateForm()
             if(isValid){
-                db.insertUser(txtName.text.toString(),txtLastname.text.toString(),txtEmail.text.toString(),txtPassword.text.toString(),getByteArrayFromBitmap(ivProfile.drawable.toBitmap()))
+                //db.insertUser(txtName.text.toString(),txtLastname.text.toString(),txtEmail.text.toString(),txtPassword.text.toString(),getByteArrayFromBitmap(ivProfile.drawable.toBitmap()))
+                insert()
             }
         }
 
@@ -73,20 +82,6 @@ class RegisterActivity : AppCompatActivity() {
             galleryCheckPermission()
         }
 
-        /*
-        ivProfile.setOnClickListener{
-            val pictureDialog = AlertDialog.Builder(this)
-            pictureDialog.setTitle("Seleccionar imagen")
-            val pictureDialogItem = arrayOf("Seleccionar foto de galería",
-            "Capturar foto")
-            pictureDialog.setItems(pictureDialogItem) { dialog, which ->
-                when (which){
-                    0 -> gallery()
-                    1 -> camera()
-                }
-            }
-        }
-        */
     }
 
     private fun cameraCheckPermission(){
@@ -195,10 +190,6 @@ class RegisterActivity : AppCompatActivity() {
                 isValid = false
                 txtConfirmPass.error = getString(R.string.passnotmatch)
             }
-            if(!db.checkEmail(txtEmail.text.toString())){
-                isValid = false
-                txtEmail.error = getString(R.string.checkEmail)
-            }
         }
         return isValid
     }
@@ -208,6 +199,27 @@ class RegisterActivity : AppCompatActivity() {
         return pattern.containsMatchIn(pass)
     }
 
+    private fun insert() {
+
+        val encodedString:String =  Base64.getEncoder().encodeToString(getByteArrayFromBitmap(ivProfile.drawable.toBitmap()))
+        val strEncodeImage = "data:image/png;base64,$encodedString"
+        val user = UserModel(0,txtName.text.toString(),txtLastname.text.toString(),txtEmail.text.toString(),txtPassword.text.toString(),strEncodeImage)
+        viewModel.insertUser(user)
+
+    }
+
+    private fun initViewModel(){
+        viewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        viewModel.insertUserObserver().observe(this, androidx.lifecycle.Observer <ApiResponse?> { response ->
+            if(response == null){
+                Toast.makeText(this@RegisterActivity, "Error ${response?.message}",Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(this@RegisterActivity, "${response.message}",Toast.LENGTH_LONG).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        })
+    }
 }
 
 

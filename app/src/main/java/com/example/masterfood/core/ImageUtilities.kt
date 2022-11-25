@@ -1,9 +1,11 @@
-package com.example.masterfood.Utilities
+package com.example.masterfood.core
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.util.Base64
+import android.util.Log
 import androidx.core.graphics.drawable.toBitmap
 import java.io.ByteArrayOutputStream
 
@@ -18,7 +20,7 @@ object  ImageUtilities{
 
     }
     //Obtener una imagen desde la carpeta res y convertirla a byte array
-    fun getByteArrayFromResourse(idImage:Int, content: Context):ByteArray{
+    fun getByteArrayFromResource(idImage:Int, content: Context):ByteArray{
         var bitmap = BitmapFactory.decodeResource(content.resources, idImage)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG,HIGH_QUALITY_IMAGE, stream)
@@ -41,7 +43,8 @@ object  ImageUtilities{
     }
 
     //Obtiene un bitamap desde byteArray
-    fun getBitMapFromByteArray(data:ByteArray): Bitmap {
-        return BitmapFactory.decodeByteArray(data,0,data.size)
+    fun getBitMapFromByteArray(data:String?): Bitmap {
+        val decodedBytes : ByteArray = Base64.decode(data, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes,0,decodedBytes.size)
     }
 }

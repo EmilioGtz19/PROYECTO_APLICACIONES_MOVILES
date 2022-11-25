@@ -1,4 +1,4 @@
-package com.example.masterfood
+package com.example.masterfood.data.model
 
 data class KitchenRecipes (
 
