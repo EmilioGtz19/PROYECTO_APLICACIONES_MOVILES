@@ -18,13 +18,14 @@ class DBHelper(var context: Context) : SQLiteOpenHelper(context,
     override fun onCreate(db: SQLiteDatabase?) {
 
         try{
-            val createUsersTable:String =  "CREATE TABLE " + SetDB.table_users.TABLE_NAME + "(" +
-                    SetDB.table_users.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    SetDB.table_users.COL_NAME + " VARCHAR(50)," +
-                    SetDB.table_users.COL_LASTNAME + " VARCHAR(50)," +
-                    SetDB.table_users.COL_EMAIL + " VARCHAR(100) UNIQUE," +
-                    SetDB.table_users.COL_PASS + " VARCHAR(100)," +
-                    SetDB.table_users.COL_IMG + " BLOB)"
+            val createUsersTable:String =  "CREATE TABLE " + SetDB.UsersTable.TABLE_NAME + "(" +
+                    SetDB.UsersTable.COL_ID + " INTEGER PRIMARY KEY," +
+                    SetDB.UsersTable.COL_NAME + " VARCHAR(50)," +
+                    SetDB.UsersTable.COL_DATE + " VARCHAR(50)," +
+                    SetDB.UsersTable.COL_LASTNAME + " VARCHAR(50)," +
+                    SetDB.UsersTable.COL_EMAIL + " VARCHAR(100) UNIQUE," +
+                    SetDB.UsersTable.COL_PASS + " VARCHAR(100)," +
+                    SetDB.UsersTable.COL_IMG + " BLOB)"
 
             db?.execSQL(createUsersTable)
 
@@ -42,39 +43,69 @@ class DBHelper(var context: Context) : SQLiteOpenHelper(context,
         onCreate(db)
     }
 
-    fun insertUser(user: UserModel): Boolean{
+    fun insertUser(user: UserModel?): Boolean{
+        var boolResult = true
+        
+        if(!checkEmail(user?.user_id)) {
+            val dataBase: SQLiteDatabase = this.writableDatabase
+            val values = ContentValues()
 
-        val dataBase:SQLiteDatabase = this.writableDatabase
-        val values = ContentValues()
-        var boolResult =  true
 
-        values.put(SetDB.table_users.COL_NAME,user.first_name)
-        values.put(SetDB.table_users.COL_LASTNAME,user.last_name)
-        values.put(SetDB.table_users.COL_EMAIL,user.email)
-        values.put(SetDB.table_users.COL_PASS,user.pass)
-        values.put(SetDB.table_users.COL_IMG,user.user_photo)
-        values.put(SetDB.table_users.COL_DATE,user.last_update)
+            values.put(SetDB.UsersTable.COL_ID, user?.user_id)
+            values.put(SetDB.UsersTable.COL_NAME, user?.first_name)
+            values.put(SetDB.UsersTable.COL_LASTNAME, user?.last_name)
+            values.put(SetDB.UsersTable.COL_EMAIL, user?.email)
+            values.put(SetDB.UsersTable.COL_PASS, user?.pass)
+            values.put(SetDB.UsersTable.COL_IMG, user?.user_photo)
+            values.put(SetDB.UsersTable.COL_DATE, user?.last_update)
+            values.put(SetDB.UsersTable.COL_PASS, user?.pass)
 
-        try {
-            val result =  dataBase.insert(SetDB.table_users.TABLE_NAME, null, values)
+            try {
+                val result = dataBase.insert(SetDB.UsersTable.TABLE_NAME, null, values)
 
-            if (result == (0).toLong()) {
-                Log.e("Insertar usuario","Error")
+                if (result == (0).toLong()) {
+                    Log.e("Insert", "Error")
+                } else {
+                    Log.e("Insert", "Success")
+                }
+
+            } catch (e: Exception) {
+                Log.e("Exception", e.toString())
+                boolResult = false
             }
-            else {
-                Log.e("Insertar usuario","Agregado")
+
+            dataBase.close()
+        }
+
+        return boolResult
+    }
+
+    private fun checkEmail(id : Int?) : Boolean {
+        var isValid = true
+
+        val dataBase:SQLiteDatabase = this.readableDatabase
+
+        try{
+            val c: Cursor = dataBase.rawQuery("SELECT " + SetDB.UsersTable.COL_ID + " FROM " + SetDB.UsersTable.TABLE_NAME + " WHERE " + SetDB.UsersTable.COL_ID + " = ?",
+                arrayOf(id.toString())
+            )
+
+            if(c.moveToFirst()){
+                Log.e("Insert","Existing User")
+            }else{
+                Log.e("Insert","Go to function insertUser")
+                isValid = false
             }
 
-        }catch (e: Exception){
+
+        }catch(e: Exception){
             Log.e("Exception", e.toString())
-            boolResult =  false
+            isValid =  false
         }
 
         dataBase.close()
 
-        return boolResult
-
-
+        return isValid
     }
 
     fun login(email : String, pass : String) : Boolean {
@@ -90,10 +121,10 @@ class DBHelper(var context: Context) : SQLiteOpenHelper(context,
             )
 
             if(c.moveToFirst()){
-                user.user_id = c.getInt(c.getColumnIndexOrThrow(SetDB.table_users.COL_ID))
-                user.first_name = c.getString(c.getColumnIndexOrThrow(SetDB.table_users.COL_NAME))
-                user.last_name = c.getString(c.getColumnIndexOrThrow(SetDB.table_users.COL_LASTNAME))
-                user.email = c.getString(c.getColumnIndexOrThrow(SetDB.table_users.COL_EMAIL))
+                user.user_id = c.getInt(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_ID))
+                user.first_name = c.getString(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_NAME))
+                user.last_name = c.getString(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_LASTNAME))
+                user.email = c.getString(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_EMAIL))
                 prefs.saveUser(user)
                 Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
             }else{

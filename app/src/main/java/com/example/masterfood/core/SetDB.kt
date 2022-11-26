@@ -7,7 +7,7 @@ class SetDB {
         const val DB_VERSION = 2
     }
 
-    abstract class table_users{
+    abstract class UsersTable{
         companion object{
             const val TABLE_NAME = "USERS"
             const val COL_ID =  "USER_ID"

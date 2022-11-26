@@ -18,6 +18,7 @@ import coil.transform.CircleCropTransformation
 import com.example.masterfood.R
 import com.example.masterfood.core.DBHelper
 import com.example.masterfood.core.ImageUtilities.getByteArrayFromBitmap
+import com.example.masterfood.core.InternetUtilities.isNetworkAvailable
 import com.example.masterfood.data.model.ApiResponse
 import com.example.masterfood.data.model.UserModel
 import com.example.masterfood.ui.viewmodel.UserViewModel
@@ -35,7 +36,6 @@ import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var db: DBHelper
     private lateinit var viewModel: UserViewModel
 
     private val responseLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
@@ -63,14 +63,16 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        db = DBHelper(this)
 
         initViewModel()
         btnRegisterActivity.setOnClickListener {
             val isValid = validateForm()
             if(isValid){
-                //db.insertUser(txtName.text.toString(),txtLastname.text.toString(),txtEmail.text.toString(),txtPassword.text.toString(),getByteArrayFromBitmap(ivProfile.drawable.toBitmap()))
-                insert()
+                if(isNetworkAvailable(this)) {
+                    insert()
+                }else{
+                    Toast.makeText(this@RegisterActivity, getString(R.string.InternetNotAvailable),Toast.LENGTH_LONG).show()
+                }
             }
         }
 

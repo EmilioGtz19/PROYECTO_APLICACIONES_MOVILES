@@ -10,7 +10,7 @@ import com.example.masterfood.R
 import com.example.masterfood.data.model.*
 import com.example.masterfood.ui.viewmodel.RecipeViewModel
 import kotlinx.android.synthetic.main.activity_recipe.*
-import kotlin.collections.ArrayList
+import java.util.*
 
 
 class RecipeActivity : AppCompatActivity() {
@@ -222,6 +222,6 @@ class RecipeActivity : AppCompatActivity() {
             difficultItem,
             etNationality?.text.toString())
         viewModel.insertRecipe(recipe)
-
     }
+
 }

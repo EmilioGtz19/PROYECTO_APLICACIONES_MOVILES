@@ -2,7 +2,6 @@ package com.example.masterfood.ui.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,14 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.masterfood.ui.view.EditPassActivity
 import com.example.masterfood.ui.view.EditProfileActivity
 import com.example.masterfood.R
 import com.example.masterfood.core.ImageUtilities
+import com.example.masterfood.core.InternetUtilities.isNetworkAvailable
 import com.example.masterfood.data.model.UserApplication
 import com.example.masterfood.data.model.UserModel
 import com.example.masterfood.ui.view.MainActivity
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
         val btnEdit = view.findViewById<Button>(R.id.btnEdit)
@@ -43,13 +43,23 @@ class ProfileFragment : Fragment() {
         this.loadPreference(txtUserNameProfile,txtLastnameProfile,txtEmailProfile,img)
 
         btnEdit.setOnClickListener{
-            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
-            requireActivity().startActivity(intent)
+            if(isNetworkAvailable(requireActivity())) {
+                val intent = Intent(requireActivity(), EditProfileActivity::class.java)
+                requireActivity().startActivity(intent)
+            }else{
+                Toast.makeText(requireActivity(), getString(R.string.InternetNotAvailable),
+                    Toast.LENGTH_LONG).show()
+            }
         }
 
         btnEditPass.setOnClickListener{
-            val intent = Intent(requireActivity(), EditPassActivity::class.java)
-            requireActivity().startActivity(intent)
+            if(isNetworkAvailable(requireActivity())) {
+                val intent = Intent(requireActivity(), EditPassActivity::class.java)
+                requireActivity().startActivity(intent)
+            }else{
+                Toast.makeText(requireActivity(), getString(R.string.InternetNotAvailable),
+                    Toast.LENGTH_LONG).show()
+            }
         }
 
         btnLogout.setOnClickListener {
@@ -58,8 +68,6 @@ class ProfileFragment : Fragment() {
             requireActivity().startActivity(intent)
         }
 
-
-        // Inflate the layout for this fragment
         return view
     }
 

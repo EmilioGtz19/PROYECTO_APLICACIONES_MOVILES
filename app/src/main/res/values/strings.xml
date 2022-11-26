@@ -63,4 +63,6 @@
     <string name="EmptyIngredientsList">Faltan ingredientes</string>
     <string name="EmptyUtensilsList">Faltan utensilios</string>
     <string name="EmptyStepsList">Faltan los pasos de la receta</string>
+    <string name="InternetNotAvailable">No hay internet!</string>
+    <string name="LoginError">No es posible iniciar sesion</string>
 </resources>

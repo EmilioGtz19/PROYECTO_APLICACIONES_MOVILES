@@ -15,24 +15,15 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var viewModel: UserViewModel
-    private lateinit var db: DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        db = DBHelper(this)
-
         initViewModel()
         btnLogin.setOnClickListener {
             val isValid = validateForm()
             if(isValid){
-                /*
-                if(db.login(txtUser.text.toString(),txtPass.text.toString())){
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
-                 */
                 val user = UserModel(0,null,null,txtUser.text.toString(),txtPass.text.toString(),null,null)
                 viewModel.login(user)
 
@@ -67,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[UserViewModel::class.java]
         viewModel.loginObserver().observe(this, androidx.lifecycle.Observer <UserModel?> { response ->
             if(response == null){
-                Toast.makeText(this@LoginActivity, "Error", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@LoginActivity, getString(R.string.LoginError), Toast.LENGTH_LONG).show()
             }else{
                 Toast.makeText(this@LoginActivity, "Bienvenido ${response.first_name}", Toast.LENGTH_LONG).show()
                 prefs.saveUser(response)

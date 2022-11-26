@@ -7,6 +7,7 @@ import com.example.masterfood.core.DBHelper
 import com.example.masterfood.core.RestEngine
 import com.example.masterfood.data.network.UserService
 import com.example.masterfood.data.model.ApiResponse
+import com.example.masterfood.data.model.UserApplication.Companion.db
 import com.example.masterfood.data.model.UserModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,7 +15,6 @@ import retrofit2.Response
 
 class UserViewModel : ViewModel() {
 
-    private lateinit var db: DBHelper
     var insertUserLiveData: MutableLiveData<ApiResponse?> = MutableLiveData()
     var updateUserLiveData: MutableLiveData<ApiResponse?> = MutableLiveData()
     var updatePassLiveData: MutableLiveData<ApiResponse?> = MutableLiveData()
@@ -92,6 +92,8 @@ class UserViewModel : ViewModel() {
 
         result.enqueue(object: Callback<UserModel>{
             override fun onResponse(call: Call<UserModel>, response: Response<UserModel>) {
+                var user : UserModel? = response.body()
+                db.insertUser(user)
                 loginLiveData.postValue(response.body())
             }
 
