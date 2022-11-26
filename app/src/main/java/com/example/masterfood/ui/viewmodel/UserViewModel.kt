@@ -7,6 +7,7 @@ import com.example.masterfood.core.DBHelper
 import com.example.masterfood.core.RestEngine
 import com.example.masterfood.data.network.UserService
 import com.example.masterfood.data.model.ApiResponse
+import com.example.masterfood.data.model.UserApplication
 import com.example.masterfood.data.model.UserApplication.Companion.db
 import com.example.masterfood.data.model.UserModel
 import retrofit2.Call
@@ -87,21 +88,29 @@ class UserViewModel : ViewModel() {
     }
 
     fun login(User: UserModel){
+
         val userService: UserService = RestEngine.getRestEngine().create(UserService::class.java)
         val result = userService.login(User)
 
         result.enqueue(object: Callback<UserModel>{
             override fun onResponse(call: Call<UserModel>, response: Response<UserModel>) {
-                var user : UserModel? = response.body()
+                val user : UserModel? = response.body()
                 db.insertUser(user)
                 loginLiveData.postValue(response.body())
             }
 
             override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                loginLiveData.postValue(null)
+                val user : UserModel = db.login(User)
+                Log.e("User",user.user_id.toString())
+                if(user.user_id != 0){
+                    loginLiveData.postValue(user)
+                }else{
+                    loginLiveData.postValue(null)
+                }
             }
 
         })
+
     }
 
 }

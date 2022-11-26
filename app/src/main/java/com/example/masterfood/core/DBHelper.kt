@@ -45,7 +45,7 @@ class DBHelper(var context: Context) : SQLiteOpenHelper(context,
 
     fun insertUser(user: UserModel?): Boolean{
         var boolResult = true
-        
+
         if(!checkEmail(user?.user_id)) {
             val dataBase: SQLiteDatabase = this.writableDatabase
             val values = ContentValues()
@@ -108,16 +108,12 @@ class DBHelper(var context: Context) : SQLiteOpenHelper(context,
         return isValid
     }
 
-    fun login(email : String, pass : String) : Boolean {
-
-        var isValid = true
-
-        val user = UserModel()
+    fun login(user: UserModel) : UserModel {
         val dataBase:SQLiteDatabase = this.readableDatabase
 
         try{
-            val c: Cursor = dataBase.rawQuery("SELECT user_id, name, last_name, email, pass FROM users WHERE email = ? AND pass = ?",
-                arrayOf(email, pass)
+            val c: Cursor = dataBase.rawQuery("SELECT * FROM users WHERE email = ? AND pass = ?",
+                arrayOf(user.email, user.pass)
             )
 
             if(c.moveToFirst()){
@@ -125,24 +121,22 @@ class DBHelper(var context: Context) : SQLiteOpenHelper(context,
                 user.first_name = c.getString(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_NAME))
                 user.last_name = c.getString(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_LASTNAME))
                 user.email = c.getString(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_EMAIL))
-                prefs.saveUser(user)
-                Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
+                user.user_photo = c.getString(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_IMG))
+                user.last_update = c.getString(c.getColumnIndexOrThrow(SetDB.UsersTable.COL_DATE))
+                Log.e("Login SQLite", "Success")
             }else{
-                Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
-                isValid = false
+                Log.e("Login SQLite", "Failed")
             }
 
             c.close()
 
         }catch(e: Exception){
             Log.e("Exception", e.toString())
-            isValid =  false
         }
 
         dataBase.close()
 
-        return isValid
-
+       return user
     }
 
 }

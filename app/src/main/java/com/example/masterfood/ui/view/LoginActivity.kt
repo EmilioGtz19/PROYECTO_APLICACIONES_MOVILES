@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.masterfood.R
-import com.example.masterfood.core.DBHelper
 import com.example.masterfood.data.model.UserApplication.Companion.prefs
 import com.example.masterfood.data.model.UserModel
 import com.example.masterfood.ui.viewmodel.UserViewModel
