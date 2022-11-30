@@ -16,16 +16,6 @@ class UserApplication : Application() {
         super.onCreate()
         prefs = Prefs(applicationContext)
         db = DBHelper(this)
-        loadPreference()
-    }
-
-    private fun loadPreference(){
-        val credential: UserModel = prefs.getUser()
-        if (credential.user_id != 0) {
-            if (isNetworkAvailable(applicationContext)) {
-                val lastUpdateMySQL = credential.last_update;
-            }
-        }
     }
 
 }

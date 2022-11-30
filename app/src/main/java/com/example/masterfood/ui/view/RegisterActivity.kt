@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.masterfood.R
-import com.example.masterfood.core.DBHelper
 import com.example.masterfood.core.ImageUtilities.getByteArrayFromBitmap
 import com.example.masterfood.core.InternetUtilities.isNetworkAvailable
 import com.example.masterfood.data.model.ApiResponse

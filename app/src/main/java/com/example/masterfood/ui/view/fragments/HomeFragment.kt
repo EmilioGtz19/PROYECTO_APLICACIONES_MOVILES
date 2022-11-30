@@ -1,7 +1,6 @@
 package com.example.masterfood.ui.view.fragments
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,24 +9,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterfood.*
-import com.example.masterfood.core.ImageUtilities
 import com.example.masterfood.ui.adapter.KitchenRecipesAdapter
-import com.example.masterfood.data.model.KitchenRecipesProvider
 import com.example.masterfood.data.model.UserApplication.Companion.prefs
-import com.example.masterfood.data.model.UserModel
 import com.example.masterfood.ui.view.LoginActivity
-import com.example.masterfood.ui.view.RegisterActivity
-import kotlinx.android.synthetic.main.fragment_home.*
 import com.example.masterfood.core.ImageUtilities.getBitMapFromByteArray
+import com.example.masterfood.data.model.*
+import com.example.masterfood.ui.viewmodel.HomeViewModel
+import com.example.masterfood.ui.viewmodel.UserViewModel
 
 
 class HomeFragment : Fragment() {
 
+    private lateinit var viewModel: HomeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initViewModel()
+
     }
 
     override fun onCreateView(
@@ -48,15 +51,14 @@ class HomeFragment : Fragment() {
 
 
         initRecyclerView(view)
+
         // Inflate the layout for this fragment
         return view
     }
 
 
     private fun initRecyclerView(view : View){
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerKitchenRecipes)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = KitchenRecipesAdapter(KitchenRecipesProvider.kitchenRecipes)
+        viewModel.getRecipes()
     }
 
     private fun loadPreference(txt : TextView, img : ImageView, btn : Button){
@@ -71,4 +73,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun initViewModel(){
+        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        viewModel.getRecipeObserver().observe(requireActivity(), androidx.lifecycle.Observer <List<RecipeModelHome>?> { response ->
+            if(response == null){
+                Toast.makeText(requireActivity(), "Error",Toast.LENGTH_LONG).show()
+            }else{
+                val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerKitchenRecipes)
+                if (recyclerView != null) {
+                    recyclerView.layoutManager = LinearLayoutManager(activity)
+                    recyclerView.adapter = KitchenRecipesAdapter(response)
+                }
+            }
+        })
+    }
 }

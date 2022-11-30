@@ -11,3 +11,12 @@ data class RecipeModel(
     var difficulty_id : Int? = null,
     var nationality : String? = null
 )
+
+data class RecipeModelHome(
+    var user_id : Int? = null,
+    var recipe_id : Int? = null,
+    var first_name: String? = null,
+    var title : String? = null,
+    var difficulty : String? = null,
+    var nationality : String? = null
+)

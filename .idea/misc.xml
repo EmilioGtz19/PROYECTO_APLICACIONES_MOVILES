@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/drawable/bg_color.xml" value="0.33" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/drawable/bg_header.xml" value="0.292" />
+        <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/drawable/bg_recycler.xml" value="0.33" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/drawable/ic_add.xml" value="0.3675" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/drawable/ic_book.xml" value="0.354" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/drawable/ic_home.xml" value="0.354" />
@@ -21,7 +22,7 @@
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/layout/fragment_home.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/layout/fragment_my_recipes.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/layout/fragment_profile.xml" value="0.3009833262077811" />
-        <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/layout/item_kitchen_recipes.xml" value="0.25" />
+        <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/layout/item_kitchen_recipes.xml" value="0.5" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/layout/item_my_recipes.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/layout/spinner_item.xml" value="0.11928174433518597" />
         <entry key="..\:/Users/jerar/AndroidStudioProjects/MasterFood/app/src/main/res/menu/menu.xml" value="0.2205128205128205" />
