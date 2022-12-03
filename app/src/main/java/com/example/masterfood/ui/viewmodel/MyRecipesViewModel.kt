@@ -9,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel : ViewModel() {
+class MyRecipesViewModel : ViewModel() {
 
     var getRecipesLiveData: MutableLiveData<List<RecipeModelHome>?> = MutableLiveData()
 
@@ -17,10 +17,10 @@ class HomeViewModel : ViewModel() {
         return getRecipesLiveData
     }
 
-    fun getRecipes(){
+    fun getRecipesFromUser(id : Int){
 
         val recipeService: RecipeService =  RestEngine.getRestEngine().create(RecipeService::class.java)
-        val result : Call<List<RecipeModelHome>> = recipeService.getRecipes()
+        val result : Call<List<RecipeModelHome>> = recipeService.getRecipesFromUser(id)
 
         result.enqueue(object: Callback<List<RecipeModelHome>> {
             override fun onFailure(call: Call<List<RecipeModelHome>>, t: Throwable) {

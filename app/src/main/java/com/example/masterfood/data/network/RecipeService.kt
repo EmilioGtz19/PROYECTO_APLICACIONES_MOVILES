@@ -4,10 +4,7 @@ import com.example.masterfood.data.model.ApiResponse
 import com.example.masterfood.data.model.RecipeModel
 import com.example.masterfood.data.model.RecipeModelHome
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface RecipeService {
 
@@ -17,5 +14,8 @@ interface RecipeService {
 
     @GET("Recipes/list")
     fun getRecipes() : Call<List<RecipeModelHome>>
+
+    @GET("Recipes/recipesUser")
+    fun getRecipesFromUser(@Query("id") id : Int) : Call<List<RecipeModelHome>>
 
 }

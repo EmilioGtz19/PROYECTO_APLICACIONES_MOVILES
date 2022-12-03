@@ -4,19 +4,23 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.masterfood.data.model.MyRecipes
 import com.example.masterfood.R
+import com.example.masterfood.data.model.RecipeModelHome
 
 class MyRecipesViewHolder(view: View): RecyclerView.ViewHolder(view) {
-    val title = view.findViewById<TextView>(R.id.tvRecipeTitle)
-    val foodType = view.findViewById<TextView>(R.id.tvFoodType)
-    val difficulty = view.findViewById<TextView>(R.id.tvDifficulty)
-    val photo = view.findViewById<ImageView>(R.id.ivKitchenRecipes)
+    private val title : TextView = view.findViewById<TextView>(R.id.tvRecipeTitle)
+    private val name: TextView = view.findViewById<TextView>(R.id.tvName2)
+    private val nationality = view.findViewById<TextView>(R.id.tvNationality2)
+    private val difficulty = view.findViewById<TextView>(R.id.tvDifficulty2)
 
-    fun render(MyRecipesModel: MyRecipes){
-        title.text = MyRecipesModel.title
-        foodType.text = MyRecipesModel.foodType
-        difficulty.text = MyRecipesModel.difficulty
+
+    //val photo = view.findViewById<ImageView>(R.id.ivKitchenRecipes)
+
+    fun render(myRecipes: RecipeModelHome){
+        title.text = myRecipes.title
+        name.text = myRecipes.first_name
+        nationality.text = myRecipes.nationality
+        difficulty.text = myRecipes.difficulty
 
     }
 }
