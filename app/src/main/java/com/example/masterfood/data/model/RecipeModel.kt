@@ -20,3 +20,9 @@ data class RecipeModelHome(
     var difficulty : String? = null,
     var nationality : String? = null
 )
+
+data class RecipeModel2(
+
+    var title : String? = null,
+
+)

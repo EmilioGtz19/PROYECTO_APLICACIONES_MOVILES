@@ -2,6 +2,7 @@ package com.example.masterfood.data.network
 
 import com.example.masterfood.data.model.ApiResponse
 import com.example.masterfood.data.model.RecipeModel
+import com.example.masterfood.data.model.RecipeModel2
 import com.example.masterfood.data.model.RecipeModelHome
 import retrofit2.Call
 import retrofit2.http.*
@@ -18,4 +19,6 @@ interface RecipeService {
     @GET("Recipes/recipesUser")
     fun getRecipesFromUser(@Query("id") id : Int) : Call<List<RecipeModelHome>>
 
+    @GET("Recipes/recipeId")
+    fun getRecipesFromId(@Query("id") id : Int) : Call<RecipeModel2>
 }

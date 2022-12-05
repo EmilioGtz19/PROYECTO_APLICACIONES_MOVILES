@@ -18,8 +18,10 @@ import com.example.masterfood.data.model.UserApplication.Companion.prefs
 import com.example.masterfood.ui.view.LoginActivity
 import com.example.masterfood.core.ImageUtilities.getBitMapFromByteArray
 import com.example.masterfood.data.model.*
+import com.example.masterfood.ui.view.DetailsActivity
 import com.example.masterfood.ui.viewmodel.HomeViewModel
 import com.example.masterfood.ui.viewmodel.UserViewModel
+import java.text.FieldPosition
 
 
 class HomeFragment : Fragment() {
@@ -30,6 +32,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         initViewModel()
+        findRecipeViewModel()
 
     }
 
@@ -82,8 +85,32 @@ class HomeFragment : Fragment() {
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerKitchenRecipes)
                 if (recyclerView != null) {
                     recyclerView.layoutManager = LinearLayoutManager(activity)
-                    recyclerView.adapter = KitchenRecipesAdapter(response)
+                    var adapter = KitchenRecipesAdapter(response)
+                    recyclerView.adapter = adapter
+
+                    adapter.setOnItemClickListener(object : KitchenRecipesAdapter.OnItemClickListener{
+
+                        override fun onItemClick(position: Int){
+                            //Toast.makeText(requireActivity(),"Receta : $position", Toast.LENGTH_SHORT).show()
+
+                            viewModel.getRecipeById(position)
+
+                        }
+                    })
                 }
+            }
+        })
+    }
+
+    private fun findRecipeViewModel(){
+        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        viewModel.getRecipeByIdObserver().observe(requireActivity(), androidx.lifecycle.Observer <RecipeModel2?> { response ->
+            if(response == null){
+                Toast.makeText(requireActivity(), "Error",Toast.LENGTH_LONG).show()
+            }else{
+                val intent = Intent(requireActivity(), DetailsActivity()::class.java)
+                //intent.putExtra("list", response);
+                startActivity(intent)
             }
         })
     }
