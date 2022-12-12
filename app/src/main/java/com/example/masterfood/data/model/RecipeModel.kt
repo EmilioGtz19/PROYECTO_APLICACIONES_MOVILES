@@ -22,7 +22,11 @@ data class RecipeModelHome(
 )
 
 data class RecipeModel2(
-
+    var first_name: String? = null,
+    var last_name: String? = null,
     var title : String? = null,
-
+    var difficulty: String? = null,
+    var nationality : String? = null,
+    var amount_people: Int? = null,
+    var food_type: String? = null
 )

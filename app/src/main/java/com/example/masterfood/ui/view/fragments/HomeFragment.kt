@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
                     adapter.setOnItemClickListener(object : KitchenRecipesAdapter.OnItemClickListener{
 
                         override fun onItemClick(position: Int){
-                            //Toast.makeText(requireActivity(),"Receta : $position", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireActivity(),"Receta : $position", Toast.LENGTH_SHORT).show()
 
                             viewModel.getRecipeById(position)
 
@@ -108,8 +108,15 @@ class HomeFragment : Fragment() {
             if(response == null){
                 Toast.makeText(requireActivity(), "Error",Toast.LENGTH_LONG).show()
             }else{
-                val intent = Intent(requireActivity(), DetailsActivity()::class.java)
-                //intent.putExtra("list", response);
+                //Toast.makeText(requireActivity(),"Receta : $response", Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireActivity(), DetailsActivity::class.java)
+                intent.putExtra("first_name", response.first_name);
+                intent.putExtra("last_name", response.last_name);
+                intent.putExtra("title", response.title);
+                intent.putExtra("difficulty", response.difficulty);
+                intent.putExtra("nationality", response.nationality);
+                intent.putExtra("amount", response.amount_people);
+                intent.putExtra("food_type", response.food_type);
                 startActivity(intent)
             }
         })
