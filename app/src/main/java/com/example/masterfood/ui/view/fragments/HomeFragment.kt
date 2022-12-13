@@ -110,13 +110,14 @@ class HomeFragment : Fragment() {
             }else{
                 //Toast.makeText(requireActivity(),"Receta : $response", Toast.LENGTH_SHORT).show()
                 val intent = Intent(requireActivity(), DetailsActivity::class.java)
-                intent.putExtra("first_name", response.first_name);
-                intent.putExtra("last_name", response.last_name);
-                intent.putExtra("title", response.title);
-                intent.putExtra("difficulty", response.difficulty);
-                intent.putExtra("nationality", response.nationality);
-                intent.putExtra("amount", response.amount_people);
-                intent.putExtra("food_type", response.food_type);
+                intent.putExtra("first_name", response.first_name)
+                intent.putExtra("last_name", response.last_name)
+                intent.putExtra("title", response.title)
+                intent.putExtra("difficulty", response.difficulty)
+                intent.putExtra("nationality", response.nationality)
+                intent.putExtra("amount", response.amount_people)
+                intent.putExtra("food_type", response.food_type)
+                intent.putExtra("ingredients",response.ingredients)
                 startActivity(intent)
             }
         })

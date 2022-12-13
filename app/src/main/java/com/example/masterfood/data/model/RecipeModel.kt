@@ -28,5 +28,8 @@ data class RecipeModel2(
     var difficulty: String? = null,
     var nationality : String? = null,
     var amount_people: Int? = null,
-    var food_type: String? = null
+    var food_type: String? = null,
+    var ingredients: ArrayList<String>,
+    var utensils: ArrayList<String>,
+    var steps: ArrayList<String>
 )

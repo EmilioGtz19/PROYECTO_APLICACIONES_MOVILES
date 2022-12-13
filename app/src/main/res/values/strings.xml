@@ -70,4 +70,6 @@
     <string name="difficulty">Dificultad:</string>
     <string name="nationality_details">Nacionalidad:</string>
     <string name="amount_people_details">Cantidad de personas:</string>
+    <string name="showIngredients">Ver Ingredientes</string>
+    <string name="listIngredients">Lista de Ingredientes</string>
 </resources>
