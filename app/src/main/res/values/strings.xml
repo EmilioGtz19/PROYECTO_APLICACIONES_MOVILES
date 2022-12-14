@@ -72,4 +72,6 @@
     <string name="amount_people_details">Cantidad de personas:</string>
     <string name="showIngredients">Ver Ingredientes</string>
     <string name="listIngredients">Lista de Ingredientes</string>
+    <string name="showUtensils">Ver utensilios</string>
+    <string name="listUtensils">Lista de Utensilios</string>
 </resources>
