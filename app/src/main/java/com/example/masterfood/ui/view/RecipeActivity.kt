@@ -1,24 +1,25 @@
 package com.example.masterfood.ui.view
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.masterfood.R
+import com.example.masterfood.core.ImageUtilities.getByteArrayFromBitmap
 import com.example.masterfood.data.model.ApiResponse
 import com.example.masterfood.data.model.RecipeModel
 import com.example.masterfood.data.model.UserApplication
@@ -34,15 +35,13 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.activity_recipe.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class RecipeActivity : AppCompatActivity() {
 
     private lateinit var viewModel: RecipeViewModel
-
-    private lateinit var path : String
-    private lateinit var originalUri : Uri
-    lateinit var product_Image_name : String
 
     private var etTitle : EditText? = null
     private var etAmount : EditText? = null
@@ -246,40 +245,21 @@ class RecipeActivity : AppCompatActivity() {
     }
 
     private fun insert() {
+        val encodedString:String =  Base64.getEncoder().encodeToString(getByteArrayFromBitmap(imageView2.drawable.toBitmap()))
+        val strEncodeImage = "data:image/png;base64,$encodedString"
+
         val recipe = RecipeModel(
             loadUser(),
             etTitle?.text.toString(),
-            foodItem,
+            foodItem?.plus(1),
             Integer.valueOf(etAmount?.text.toString()),
             lvIngredientsList,
             lvUtensilsList,
             lvStepsList,
-            difficultItem,
-            etNationality?.text.toString())
+            difficultItem?.plus(1),
+            etNationality?.text.toString(),
+            strEncodeImage)
         viewModel.insertRecipe(recipe)
-    }
-
-    private fun getPath(uri : Uri) : String{
-        var cursor : Cursor = contentResolver.query(uri, null, null, null,null)!!
-
-        cursor.moveToFirst()
-        var document = cursor.getString(0)
-        document = document.substring(document.lastIndexOf(":") + 1);
-        Log.e("document_id",document)
-        cursor.close()
-
-        cursor = contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            null,
-            MediaStore.Images.Media._ID + " = ? ",
-            arrayOf(document),
-            null)!!
-        cursor.moveToFirst()
-
-        path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
-        cursor.close()
-
-        return path
     }
 
     private fun cameraCheckPermission(){
@@ -364,7 +344,7 @@ class RecipeActivity : AppCompatActivity() {
     private val responseLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
         if(activityResult.resultCode == RESULT_OK){
             val bitmap = activityResult.data?.extras!!["data"] as Bitmap?
-                imageView2.load(bitmap){
+            imageView2.load(bitmap){
                 crossfade(true)
                 crossfade(1000)
             }
@@ -374,39 +354,12 @@ class RecipeActivity : AppCompatActivity() {
     private val responseLauncher2 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
         if(activityResult.resultCode == RESULT_OK){
             val bitmap = activityResult.data?.data
-            originalUri = activityResult.data?.data as Uri
-            product_Image_name = "" + getPath(originalUri).toString().substring(getPath(originalUri).toString().lastIndexOf('/')+1)
-            val takeFlags: Int =
-                activityResult.data!!.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            contentResolver.takePersistableUriPermission(originalUri,takeFlags)
-
-            Log.e("uri",originalUri.toString())
             imageView2.load(bitmap){
+                allowHardware(false)
                 crossfade(true)
                 crossfade(1000)
             }
         }
     }
-
-    /*
-    class uploadImageTask : AsyncTask<Void?, Void?, Void?>() {
-
-        var name : String = ""
-        var path : String = ""
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-
-            name =
-            path = path
-        }
-
-        override fun doInBackground(vararg p0: Void?): Void? {
-
-        }
-
-    }
-
-     */
 
 }

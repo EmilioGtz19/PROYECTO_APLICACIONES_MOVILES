@@ -1,9 +1,11 @@
 package com.example.masterfood.ui.adapter
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterfood.R
+import com.example.masterfood.core.ImageUtilities
 import com.example.masterfood.data.model.RecipeModelHome
 
 class KitchenRecipesViewHolder(view: View, listener : KitchenRecipesAdapter.OnItemClickListener): RecyclerView.ViewHolder(view) {
@@ -13,7 +15,7 @@ class KitchenRecipesViewHolder(view: View, listener : KitchenRecipesAdapter.OnIt
     private val difficulty : TextView = view.findViewById(R.id.tvDifficulty2)
     private val nationality : TextView = view.findViewById(R.id.tvNationality2)
     private var id : Int = 0
-    //val photo = view.findViewById<ImageView>(R.id.ivKitchenRecipes)
+    private var photo = view.findViewById<ImageView>(R.id.ivKitchenRecipes)
 
     init {
         itemView.setOnClickListener{
@@ -29,6 +31,7 @@ class KitchenRecipesViewHolder(view: View, listener : KitchenRecipesAdapter.OnIt
         title.text = kitchenRecipesModel.title
         difficulty.text = kitchenRecipesModel.difficulty
         nationality.text = kitchenRecipesModel.nationality
+        photo.setImageBitmap(ImageUtilities.getBitMapFromByteArray(kitchenRecipesModel.photo_cover))
     }
 
 }
