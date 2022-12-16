@@ -14,7 +14,7 @@ data class RecipeModel(
     var photo_cover: String? = null
 )
 
-//Clase para mostrar las recetas en la pagina principal
+//Clase para mostrar las recetas en la pantalla principal y en la pantalla de las recetas del usuario
 data class RecipeModelHome(
     var user_id : Int? = null,
     var recipe_id : Int? = null,
@@ -36,5 +36,6 @@ data class RecipeModel2(
     var food_type: String? = null,
     var ingredients: ArrayList<String>,
     var utensils: ArrayList<String>,
-    var steps: ArrayList<String>
+    var steps: ArrayList<String>,
+    var photo_cover: String? = null
 )

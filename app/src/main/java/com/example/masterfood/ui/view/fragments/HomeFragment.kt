@@ -127,6 +127,7 @@ class HomeFragment : Fragment(){
                 intent.putExtra("food_type", response.food_type)
                 intent.putExtra("ingredients",response.ingredients)
                 intent.putExtra("utensils",response.utensils)
+                intent.putExtra("photo_cover",response.photo_cover)
                 startActivity(intent)
             }
         })

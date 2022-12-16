@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.masterfood.R
+import com.example.masterfood.core.ImageUtilities
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.dialog_ingredients.*
 
@@ -29,6 +30,7 @@ class DetailsActivity() : AppCompatActivity() {
         val tvAmount = findViewById<TextView>(R.id.tvAmount)
         var ingredients: ArrayList<String> = arrayListOf()
         var utensils: ArrayList<String> = arrayListOf()
+        var ivDetails = findViewById<ImageView>(R.id.ivDetails)
 
         val iin = intent
         val b = iin.extras
@@ -43,6 +45,7 @@ class DetailsActivity() : AppCompatActivity() {
             val amount = b["amount"] as Int?
             ingredients = b["ingredients"] as ArrayList<String>
             utensils = b["utensils"] as ArrayList<String>
+            val photo = b["photo_cover"] as String?
 
             txtTitle.text = title
             txtName.text = n + " " + l
@@ -50,7 +53,7 @@ class DetailsActivity() : AppCompatActivity() {
             tvFoodType.text = foodType
             tvAmount.text = amount.toString()
             tvNationality.text = nationality
-
+            ivDetails.setImageBitmap(ImageUtilities.getBitMapFromByteArray(photo))
         }
 
         lvIngredientsAdapter = ArrayAdapter(

@@ -73,6 +73,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/ivDetails"
+                android:layout_width="144dp"
+                android:layout_height="138dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:srcCompat="@drawable/masterfoodimagotype" />
+
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
@@ -94,7 +104,7 @@
                 android:textColor="@color/link"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView6" />
+                app:layout_constraintTop_toBottomOf="@id/ivDetails" />
 
             <TextView
                 android:id="@+id/tvFoodType"
@@ -178,7 +188,7 @@
 
             <Button
                 android:id="@+id/btnShowIngredients"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="17sp"
@@ -189,7 +199,7 @@
 
             <Button
                 android:id="@+id/btnShowUtensils"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="17sp"
