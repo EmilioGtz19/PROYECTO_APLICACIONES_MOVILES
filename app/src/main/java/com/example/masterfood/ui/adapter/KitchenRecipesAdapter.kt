@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.masterfood.R
 import com.example.masterfood.data.model.RecipeModelHome
 
-class KitchenRecipesAdapter(private val kitchenRecipesList:List<RecipeModelHome>) : RecyclerView.Adapter<KitchenRecipesViewHolder>(){
+class KitchenRecipesAdapter(private var kitchenRecipesList:List<RecipeModelHome>) : RecyclerView.Adapter<KitchenRecipesViewHolder>() {
 
     private lateinit var mylistener : OnItemClickListener
 
@@ -26,6 +26,12 @@ class KitchenRecipesAdapter(private val kitchenRecipesList:List<RecipeModelHome>
     override fun onBindViewHolder(holder: KitchenRecipesViewHolder, position: Int) {
         val item = kitchenRecipesList[position]
         holder.render(item)
+    }
+
+    fun updateRecipes(kitchenRecipesListFilter:List<RecipeModelHome>) {
+        this.kitchenRecipesList = kitchenRecipesListFilter
+        notifyDataSetChanged()
+
     }
 
     override fun getItemCount(): Int = kitchenRecipesList.size

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,13 +21,13 @@ import com.example.masterfood.core.ImageUtilities.getBitMapFromByteArray
 import com.example.masterfood.data.model.*
 import com.example.masterfood.ui.view.DetailsActivity
 import com.example.masterfood.ui.viewmodel.HomeViewModel
-import com.example.masterfood.ui.viewmodel.UserViewModel
-import java.text.FieldPosition
 
 
-class HomeFragment : Fragment() {
+
+class HomeFragment : Fragment(){
 
     private lateinit var viewModel: HomeViewModel
+    private lateinit var txtSearch: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class HomeFragment : Fragment() {
         val btn = view.findViewById<Button>(R.id.button)
         val txt = view.findViewById<TextView>(R.id.txtUserHome)
         val img = view.findViewById<ImageView>(R.id.imageView7)
+        txtSearch = view.findViewById(R.id.txtSearch)
 
         this.loadPreference(txt,img,btn)
 
@@ -88,10 +90,16 @@ class HomeFragment : Fragment() {
                     var adapter = KitchenRecipesAdapter(response)
                     recyclerView.adapter = adapter
 
+
+                    txtSearch?.addTextChangedListener {
+                        val filter = response.filter { res -> res.title!!.lowercase().contains(it.toString().lowercase())}
+                        adapter.updateRecipes(filter)
+                    }
+
                     adapter.setOnItemClickListener(object : KitchenRecipesAdapter.OnItemClickListener{
 
                         override fun onItemClick(position: Int){
-                            Toast.makeText(requireActivity(),"Receta : $position", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(requireActivity(),"Receta : $position", Toast.LENGTH_SHORT).show()
 
                             viewModel.getRecipeById(position)
 
@@ -123,4 +131,5 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 }

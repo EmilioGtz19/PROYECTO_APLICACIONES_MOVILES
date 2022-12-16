@@ -16,8 +16,8 @@ class RestEngine {
             val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
             return Retrofit.Builder()
-                //.baseUrl("https://masterfoodapi.000webhostapp.com/API/")
-                .baseUrl("http://192.168.1.80:84/masterfood-api/v1/")
+                .baseUrl("https://masterfoodapi.000webhostapp.com/v1/")
+                //.baseUrl("http://192.168.1.80:84/masterfood-api/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
