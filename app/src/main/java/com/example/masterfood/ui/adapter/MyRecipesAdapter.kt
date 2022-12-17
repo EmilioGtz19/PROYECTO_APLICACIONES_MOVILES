@@ -9,7 +9,7 @@ import com.example.masterfood.data.model.RecipeModelHome
 class MyRecipesAdapter(private var MyRecipesList:List<RecipeModelHome>) : RecyclerView.Adapter<MyRecipesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecipesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return MyRecipesViewHolder(layoutInflater.inflate(R.layout.item_listview_steps,parent,false))
+        return MyRecipesViewHolder(layoutInflater.inflate(R.layout.item_my_recipes,parent,false))
     }
 
     override fun onBindViewHolder(holder: MyRecipesViewHolder, position: Int) {

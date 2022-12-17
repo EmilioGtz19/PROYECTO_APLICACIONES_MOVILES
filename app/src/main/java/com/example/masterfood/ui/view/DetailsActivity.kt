@@ -122,8 +122,7 @@ class DetailsActivity() : AppCompatActivity() {
             val recyclerView = mDialogView.findViewById<RecyclerView>(R.id.rvPhotos)
             if (recyclerView != null) {
                 recyclerView.layoutManager = LinearLayoutManager(this)
-                val adapter = PhotosRecipesAdapter(photos)
-                recyclerView.adapter = adapter
+                recyclerView.adapter = PhotosRecipesAdapter(photos)
             }
 
             mBuilder.show()
