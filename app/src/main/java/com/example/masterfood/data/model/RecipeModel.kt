@@ -11,7 +11,8 @@ data class RecipeModel(
     var steps : ArrayList<String>? = null,
     var difficulty_id : Int? = null,
     var nationality : String? = null,
-    var photo_cover: String? = null
+    var photo_cover: String? = null,
+    var photos : ArrayList<String>? = null
 )
 
 //Clase para mostrar las recetas en la pantalla principal y en la pantalla de las recetas del usuario
@@ -37,5 +38,6 @@ data class RecipeModel2(
     var ingredients: ArrayList<String>,
     var utensils: ArrayList<String>,
     var steps: ArrayList<String>,
-    var photo_cover: String? = null
+    var photo_cover: String? = null,
+    var photos : ArrayList<String>
 )

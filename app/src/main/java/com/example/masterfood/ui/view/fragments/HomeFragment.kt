@@ -128,6 +128,8 @@ class HomeFragment : Fragment(){
                 intent.putExtra("ingredients",response.ingredients)
                 intent.putExtra("utensils",response.utensils)
                 intent.putExtra("photo_cover",response.photo_cover)
+                intent.putExtra("steps",response.steps)
+                intent.putExtra("photos",response.photos)
                 startActivity(intent)
             }
         })

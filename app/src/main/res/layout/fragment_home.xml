@@ -98,7 +98,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerKitchenRecipes"
         android:layout_width="409dp"
-        android:layout_height="719dp"
+        android:layout_height="610dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

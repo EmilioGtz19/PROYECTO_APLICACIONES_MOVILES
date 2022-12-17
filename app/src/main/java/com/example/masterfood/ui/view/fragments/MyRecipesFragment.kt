@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +26,7 @@ import com.example.masterfood.ui.viewmodel.MyRecipesViewModel
 class MyRecipesFragment : Fragment() {
 
     private lateinit var viewModel: MyRecipesViewModel
+    private lateinit var txtSearch: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,7 @@ class MyRecipesFragment : Fragment() {
         val view : View = inflater.inflate(R.layout.fragment_my_recipes, container, false)
         val fab :View = view.findViewById(R.id.fab)
         val img = view.findViewById<ImageView>(R.id.imageView7)
-
+        txtSearch = view.findViewById(R.id.txtSearch)
 
         fab.setOnClickListener {
             val intent =  Intent(requireActivity(),RecipeActivity::class.java)
@@ -78,7 +81,13 @@ class MyRecipesFragment : Fragment() {
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerMyRecipes)
                 if (recyclerView != null) {
                     recyclerView.layoutManager = LinearLayoutManager(activity)
-                    recyclerView.adapter = MyRecipesAdapter(response)
+                    var adapter = MyRecipesAdapter(response)
+                    recyclerView.adapter = adapter
+
+                    txtSearch?.addTextChangedListener {
+                        val filter = response.filter { res -> res.title!!.lowercase().contains(it.toString().lowercase())}
+                        adapter.updateRecipes(filter)
+                    }
                 }
             }
         })

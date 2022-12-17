@@ -1,15 +1,14 @@
 package com.example.masterfood.ui.view
 
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,8 +32,10 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
-import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.activity_recipe.*
+import kotlinx.android.synthetic.main.activity_recipe.btnAddSteps
+import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.dialog_addphotos.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -68,6 +69,11 @@ class RecipeActivity : AppCompatActivity() {
 
     private var foodItem : Int? = null
     private var difficultItem : Int? = null
+
+    private lateinit var mDialogView : View
+    private lateinit var mBuilder : AlertDialog.Builder
+
+    private var photoList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,11 +126,11 @@ class RecipeActivity : AppCompatActivity() {
         }
 
         btnCamera2.setOnClickListener {
-            cameraCheckPermission()
+            cameraCheckPermission(1)
         }
 
         btnGallery2.setOnClickListener {
-            galleryCheckPermission()
+            galleryCheckPermission(1)
         }
 
         ArrayAdapter.createFromResource(
@@ -170,6 +176,33 @@ class RecipeActivity : AppCompatActivity() {
                 insert()
             }
         }
+
+        btnSteps.setOnClickListener {
+            mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_addphotos,null)
+            mBuilder = AlertDialog.Builder(this)
+                .setView(mDialogView)
+                .setTitle(getString(R.string.list_images))
+
+            val btnCamera = mDialogView.findViewById<Button>(R.id.btnCamera)
+            val btnGallery = mDialogView.findViewById<Button>(R.id.btnGallery)
+            val btnAdd = mDialogView.findViewById<Button>(R.id.btnAddPhotos)
+
+            btnCamera.setOnClickListener {
+                cameraCheckPermission(2)
+            }
+
+            btnGallery.setOnClickListener {
+                galleryCheckPermission(2)
+            }
+
+            btnAdd.setOnClickListener {
+                getPhoto()
+            }
+
+
+            mBuilder.show()
+        }
+
     }
 
     private fun validateForm() : Boolean{
@@ -200,6 +233,10 @@ class RecipeActivity : AppCompatActivity() {
                 isValid = false
                 etSteps?.error = getString(R.string.EmptyStepsList)
             }
+            if(photoList.isEmpty()){
+                isValid = false
+                Toast.makeText(this@RecipeActivity, getString(R.string.photolist_empty),Toast.LENGTH_SHORT).show()
+            }
         }
 
         return isValid
@@ -224,6 +261,13 @@ class RecipeActivity : AppCompatActivity() {
         lvStepsList.add(text)
         lvSteps?.adapter = lvStepsAdapter
         etSteps?.setText("")
+    }
+
+    private fun getPhoto(){
+        val encodedString:String =  Base64.getEncoder().encodeToString(getByteArrayFromBitmap(mDialogView.findViewById<ImageView>(R.id.ivPhotoDialog).drawable.toBitmap()))
+        val strEncodeImage = "data:image/png;base64,$encodedString"
+        photoList.add(strEncodeImage)
+        Toast.makeText(this@RecipeActivity, getString(R.string.image_add),Toast.LENGTH_SHORT).show()
     }
 
     private fun initViewModel(){
@@ -258,18 +302,25 @@ class RecipeActivity : AppCompatActivity() {
             lvStepsList,
             difficultItem?.plus(1),
             etNationality?.text.toString(),
-            strEncodeImage)
+            strEncodeImage,
+            photoList
+        )
         viewModel.insertRecipe(recipe)
     }
 
-    private fun cameraCheckPermission(){
+    private fun cameraCheckPermission(option : Int){
         Dexter.withContext(this)
             .withPermissions(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA).withListener(
                 object : MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                         report?.let {
                             if(report.areAllPermissionsGranted()){
-                                camera()
+                                if(option == 1){
+                                    camera()
+                                }else{
+                                    camera2()
+                                }
+
                             }
                         }
                     }
@@ -284,12 +335,16 @@ class RecipeActivity : AppCompatActivity() {
             ).onSameThread().check()
     }
 
-    private fun galleryCheckPermission() {
+    private fun galleryCheckPermission(option : Int) {
         Dexter.withContext(this).withPermission(
             android.Manifest.permission.READ_EXTERNAL_STORAGE
         ).withListener(object : PermissionListener {
             override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
-                gallery()
+                if(option == 1){
+                    gallery()
+                }else{
+                    gallery2()
+                }
             }
 
             override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
@@ -341,6 +396,17 @@ class RecipeActivity : AppCompatActivity() {
         responseLauncher2.launch(intent)
     }
 
+    private fun camera2(){
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        responseLauncher3.launch(intent)
+    }
+
+    private fun gallery2(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        responseLauncher4.launch(intent)
+    }
+
     private val responseLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
         if(activityResult.resultCode == RESULT_OK){
             val bitmap = activityResult.data?.extras!!["data"] as Bitmap?
@@ -362,4 +428,24 @@ class RecipeActivity : AppCompatActivity() {
         }
     }
 
+    private val responseLauncher3 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
+        if(activityResult.resultCode == RESULT_OK){
+            val bitmap = activityResult.data?.extras!!["data"] as Bitmap?
+            mDialogView.findViewById<ImageView>(R.id.ivPhotoDialog).load(bitmap){
+                crossfade(true)
+                crossfade(1000)
+            }
+        }
+    }
+
+    private val responseLauncher4 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
+        if(activityResult.resultCode == RESULT_OK){
+            val bitmap = activityResult.data?.data
+            mDialogView.findViewById<ImageView>(R.id.ivPhotoDialog).load(bitmap){
+                allowHardware(false)
+                crossfade(true)
+                crossfade(1000)
+            }
+        }
+    }
 }

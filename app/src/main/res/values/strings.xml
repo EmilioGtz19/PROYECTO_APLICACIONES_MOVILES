@@ -74,4 +74,13 @@
     <string name="listIngredients">Lista de Ingredientes</string>
     <string name="showUtensils">Ver utensilios</string>
     <string name="listUtensils">Lista de Utensilios</string>
+    <string name="steps">Pasos</string>
+    <string name="addSteps">Añadir pasos</string>
+    <string name="list_images">Imagenes</string>
+    <string name="show_steps">Ver pasos</string>
+    <string name="list_steps">Lista de pasos</string>
+    <string name="add_photos">Añadir Imagenes</string>
+    <string name="image_add">Imagen agregada</string>
+    <string name="photolist_empty">No se han añadido imagenes</string>
+    <string name="show_images">Ver imagenes</string>
 </resources>
